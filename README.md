@@ -2,4 +2,5 @@ This program allows for a user to calculate what gears to use from a choice on p
 
 
 ## Dependencies
+run the following command in your terminal in order to install the needed files after you clone the repository
 ```     pip install -r requirements.txt ```
