@@ -6,7 +6,7 @@ A = np.asarray([3, 4, 5, 9])
 logA = np.log(A)
 
 fos = 1.5
-in_torque = .4
+in_torque = .902
 out_torque = 100
 
 min_ratio = None
@@ -42,6 +42,19 @@ problem = cp.Problem(
 # Solve with SCIP (must be installed)
 result = problem.solve(solver="SCIP")
 
-print("Optimal x:", x.value)
-print("Product:", np.exp(log_expr.value))
-print("output torque:", in_torque * np.exp(log_expr.value))
+
+gear_names = ["3:1 Cartridge", "4:1 Cartridge", "5:1 Cartridge", "9:1 Cartridge"]
+
+x_vals = np.round(x.value).astype(int)
+
+print("\n================ GEAR SELECTION SUMMARY ================\n")
+
+for name, count in zip(gear_names, x_vals):
+    print(f"{name:20} : {count}")
+
+print("\n---------------------------------------------------------")
+print(f"Total number of cartridges : {np.sum(x_vals)}")
+print(f"Total ratio                : {np.exp(log_expr.value):.3f}")
+print(f"Input torque               : {in_torque}")
+print(f"Output torque              : {in_torque * np.exp(log_expr.value):.3f}")
+print("=========================================================\n")
