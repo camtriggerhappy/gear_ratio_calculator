@@ -5,12 +5,21 @@ import numpy as np
 A = np.asarray([3, 4, 5, 9])
 logA = np.log(A)
 
-fos = 1.5
-in_torque = .902
-out_torque = 9
+print("enter 1 or 2 ")
+choice = int(input("Do you wish to calculate the gear ratio from a torque value(1) or do you wish to calculate the closest gear ratio to a gear ratio(2)"))
+
+in_torque = None
+fos = None
+out_torque = None
+
+if(choice == 1):
+    in_torque = float(input("what is the input torque(nm) to the gearbox"))
+    fos = float(input("What is the desired Factor of Safety"))
+    out_torque = float(input("What is the needed output torque(nm) (no FOS)"))
 
 min_ratio = None
-
+if(choice == 2):
+    min_ratio = float(input("What is your desired minimum gear ratio"))
 # min_ratio = 240
 
 # minimum required ratio
@@ -55,10 +64,11 @@ for name, count in zip(gear_names, x_vals):
 print("\n---------------------------------------------------------")
 print(f"Total number of cartridges : {np.sum(x_vals)}")
 print(f"Total ratio                : {np.exp(log_expr.value):.3f}")
-print(f"Input torque(nm)           : {in_torque}")
-print(f"Requested Torque(nm)       : {out_torque}")
+if(in_torque):
+    print(f"Input torque(nm)           : {in_torque}")
+    print(f"Output torque(nm)          : {in_torque * np.exp(log_expr.value):.3f}")
+    print(f"Requested Torque(nm)       : {out_torque}")
 print(f"Factor of Safety           : {fos} ")
-print(f"Output torque(nm)          : {in_torque * np.exp(log_expr.value):.3f}")
 print("=========================================================\n")
 # -------------------- Stage Torque Calculation (with before/after) --------------------
 
@@ -70,8 +80,10 @@ sorted_names = [gear_names[i] for i in sorted_indices]
 
 stage_torques = []
 current_torque = in_torque
-
+if(not in_torque):
+    exit(0)
 print("\n================ STAGE TORQUES =================\n")
+
 
 stage_num = 1
 for name, ratio, count in zip(sorted_names, sorted_ratios, sorted_counts):
