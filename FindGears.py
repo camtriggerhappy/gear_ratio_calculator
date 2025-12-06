@@ -7,7 +7,7 @@ logA = np.log(A)
 
 fos = 1.5
 in_torque = .902
-out_torque = 100
+out_torque = 200
 
 min_ratio = None
 
@@ -57,4 +57,30 @@ print(f"Total number of cartridges : {np.sum(x_vals)}")
 print(f"Total ratio                : {np.exp(log_expr.value):.3f}")
 print(f"Input torque(nm)           : {in_torque}")
 print(f"Output torque(nm)          : {in_torque * np.exp(log_expr.value):.3f}")
+print("=========================================================\n")
+# -------------------- Stage Torque Calculation (with before/after) --------------------
+
+# Sort gears by descending ratio so largest stages go first
+sorted_indices = np.argsort(-A)
+sorted_ratios = A[sorted_indices]
+sorted_counts = x_vals[sorted_indices]
+sorted_names = [gear_names[i] for i in sorted_indices]
+
+stage_torques = []
+current_torque = in_torque
+
+print("\n================ STAGE TORQUES =================\n")
+
+stage_num = 1
+for name, ratio, count in zip(sorted_names, sorted_ratios, sorted_counts):
+    for _ in range(count):
+        print(f"Stage {stage_num:2d} ({name:8s} x1, ratio {ratio:3d})")
+        print(f"  Torque before stage : {current_torque:.3f} Nm")
+        current_torque *= ratio
+        stage_torques.append(current_torque)
+        print(f"  Torque after stage  : {current_torque:.3f} Nm\n")
+        stage_num += 1
+
+print("---------------------------------------------------------")
+print(f"Final output torque : {current_torque:.3f} Nm")
 print("=========================================================\n")
