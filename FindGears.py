@@ -55,6 +55,6 @@ for name, count in zip(gear_names, x_vals):
 print("\n---------------------------------------------------------")
 print(f"Total number of cartridges : {np.sum(x_vals)}")
 print(f"Total ratio                : {np.exp(log_expr.value):.3f}")
-print(f"Input torque               : {in_torque}")
-print(f"Output torque              : {in_torque * np.exp(log_expr.value):.3f}")
+print(f"Input torque(nm)           : {in_torque}")
+print(f"Output torque(nm)          : {in_torque * np.exp(log_expr.value):.3f}")
 print("=========================================================\n")
