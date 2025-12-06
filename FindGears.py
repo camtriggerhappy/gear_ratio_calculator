@@ -7,7 +7,7 @@ logA = np.log(A)
 
 fos = 1.5
 in_torque = .902
-out_torque = 200
+out_torque = 9
 
 min_ratio = None
 
@@ -56,6 +56,8 @@ print("\n---------------------------------------------------------")
 print(f"Total number of cartridges : {np.sum(x_vals)}")
 print(f"Total ratio                : {np.exp(log_expr.value):.3f}")
 print(f"Input torque(nm)           : {in_torque}")
+print(f"Requested Torque(nm)       : {out_torque}")
+print(f"Factor of Safety           : {fos} ")
 print(f"Output torque(nm)          : {in_torque * np.exp(log_expr.value):.3f}")
 print("=========================================================\n")
 # -------------------- Stage Torque Calculation (with before/after) --------------------
